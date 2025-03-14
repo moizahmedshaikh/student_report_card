@@ -2,22 +2,23 @@ students = []
 
 def get_student_data():
     student = {}
-    student["name"] = input("Enter Your Name ")
-    student["roll_number"] = input("Enter Your Your Number ")
+    student["name"] = input("Enter Student Name: ")
+    student["roll_no"] = input("Enter Roll Number: ")
+
     subjects = ["Math", "Physics", "Urdu", "English", "Computer"]
     marks = {}
 
     for subject in subjects:
         while True:
             try:
-                mark = int(input(f"Enter marks for {subject} "))
+                mark = int(input(f"Enter marks for {subject}: "))
                 if 0 <= mark <= 100:
                     marks[subject] = mark
                     break
                 else:
-                    print("Marks should be between 0 to 100")
+                    print("Marks should be between 0 and 100.")
             except ValueError:
-                print("Enter input! please enter a number")
+                print("Invalid input! Please enter a number.")
 
     student["marks"] = marks
     students.append(student)
@@ -26,7 +27,7 @@ def get_student_data():
 def calculate_grade(marks):
     total = sum(marks.values())
     percentage = (total / 500) * 100
-
+    
     if percentage >= 80:
         grade = "A+"
     elif percentage >= 70:
@@ -36,22 +37,26 @@ def calculate_grade(marks):
     elif percentage >= 50:
         grade = "C"
     elif percentage >= 40:
-        grade = "D"
-    else: 
+        grade = "F"
+    else:
         grade = "Fail"
+    
     return total, percentage, grade
+
+
 
 def generate_report_card():
     print("\n======= Student Report Cards =======\n")
     for student in students:
         total, percentage, grade = calculate_grade(student["marks"])
-
-        print(f"Student Name: {student["name"]} ")
-        print(f"Student Roll Number: {student["roll_number"]} ")
-        print("Marks: ")
-
+        
+        print(f"Student Name: {student['name']}")
+        print(f"Roll Number: {student['roll_no']}")
+        print("Marks:")
+        
         for subject, mark in student["marks"].items():
-            print(f"subjects: {mark}")
+            print(f"  {subject}: {mark}")
+
         print(f"Total Marks: {total}/500")
         print(f"Percentage: {percentage:.2f}%")
         print(f"Grade: {grade}")
@@ -60,6 +65,8 @@ def generate_report_card():
 while True:
     get_student_data()
     choice = input("Do you want to insert more? (Y/N): ").strip().lower()
+    
     if choice == 'n':
-      break
+        break
+
 generate_report_card()
